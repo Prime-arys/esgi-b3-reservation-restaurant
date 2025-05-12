@@ -16,7 +16,7 @@ async function createTable(req, res) {
     }
 }
 
-async function getTableById(req, res) {
+async function updateTable(req, res) {
     try {
         const {id} = req.params;
         const {seats} = req.body;
@@ -89,13 +89,10 @@ async function allocateTable(req, res) {
         let { group_size } = req.params;
         group_size = parseInt(group_size, 10);
 
-        // Récupérer les tables disponibles
         const tables = await getAvailableTables();
 
-        // Trouver les tables optimales
         const { allocatedTables: allocated_tables, remainingSize } = findOptimalTables(tables, group_size);
 
-        // Renvoyer la réponse appropriée
         if (remainingSize <= 0) {
             res.json({ allocated_tables });
         } else {
@@ -114,13 +111,10 @@ async function allocateTableReservation(group_size) {
     try {
         group_size = parseInt(group_size, 10);
 
-        // Récupérer les tables disponibles
         const tables = await getAvailableTables();
 
-        // Trouver les tables optimales
         const { allocatedTables: allocated_tables, remainingSize } = findOptimalTables(tables, group_size);
 
-        // Renvoyer le résultat sous forme d'objet
         if (remainingSize <= 0) {
             return {
                 success: true,
@@ -145,7 +139,7 @@ async function allocateTableReservation(group_size) {
 function initRoutesTable(app) {
     app.post("/api/table", createTable);
     app.get("/api/table", getTable);
-    app.put("/api/table/:id", getTableById);
+    app.put("/api/table/:id", updateTable);
     app.get("/api/table/:group_size", allocateTable);
 }
 
