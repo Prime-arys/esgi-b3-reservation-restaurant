@@ -1,0 +1,22 @@
+{
+  "name": "esgi-b3-reservation-restaurant",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "start" : "node src/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prime-arys/esgi-b3-reservation-restaurant.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "All rights reserved",
+  "private": true,
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Prime-arys/esgi-b3-reservation-restaurant/issues"
+  },
+  "homepage": "https://github.com/Prime-arys/esgi-b3-reservation-restaurant#readme"
+}
