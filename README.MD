@@ -492,6 +492,9 @@ Pour accéder à ces routes, il faut se connecter via la route `/api/users/conne
         -   **Status** : 400
         -   **Status** : 404
 
-## Exemple de requête JSON
 
-## Statuts HTTP utilisés
+
+## Crédit
+- R.CHAUSSY : DB, Login, User (JWT)
+- D.DECOEUR : Réservation, tables
+- R.COUTURE : Slot, tables, menu
