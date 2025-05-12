@@ -75,7 +75,7 @@ async function connectUser(req, res) {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // Set to true in production
         sameSite: 'Strict',
-        maxAge: 24 * 60 * 60 * 1000 // 1 day
+        maxAge: 72 * 60 * 60 * 1000 // 3 day
     })
     .json({
         message: 'User connected successfully',
