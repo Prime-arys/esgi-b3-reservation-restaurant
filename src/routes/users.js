@@ -4,7 +4,7 @@ const db = require('../db');
 const checkEmail = require('../utils/email').checkEmail;
 const bcrypt = require('bcrypt');
 const generateToken = require('../utils/jwt').generateToken;
-const authenticateJWT = require('../utils/jwt').authenticateJWT;
+const { authenticateJWT } = require('../utils/jwt');
 
 
 async function registerUser(req, res) {

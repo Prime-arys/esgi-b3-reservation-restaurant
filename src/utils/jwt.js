@@ -1,6 +1,7 @@
 const { expressjwt } = require("express-jwt");
 const jwt = require("jsonwebtoken");
 const getUserById = require("../utils/auth").getUserById;
+const ROLES = require("../enums/userRole").ROLES;
 
 const jwtSecret = "jwt_secret";
 const jwtExpiration = "72h";
@@ -40,24 +41,42 @@ function generateToken(user) {
 }
 
 
-function authenticateJWT(req, res, next) {
-    expressjwt(jwtOptions)(req, res, async function (err) {
-        if (err) {
-            return res.status(401).json({ error: "Unauthorized" });
-        }
-        const id = req.auth.user_id
-        const user = await getUserById(id);
-        if (!user) {
-            return res.status(401).json({ error: "Unauthorized" });
-        }
-        req.user = user;
-        next();
-    });
+function createAuthMiddleware(requireAdmin = false) {
+    return function(req, res, next) {
+        expressjwt(jwtOptions)(req, res, async function (err) {
+            if (err) {
+                return res.status(401).json({ error: "Unauthorized" });
+            }
+            
+            try {
+                const user = await getUserById(req.auth.user_id);
+                
+                if (!user) {
+                    return res.status(401).json({ error: "User not found" });
+                }
+                
+                if (requireAdmin && user.role !== ROLES.ADMIN) {
+                    return res.status(403).json({ error: "Admin access required" });
+                }
+                
+                req.user = user;
+                next();
+            } catch (error) {
+                console.error("Authentication error:", error);
+                return res.status(500).json({ error: "Server error" });
+            }
+        });
+    };
 }
 
+// Standard JWT authentication middleware
+const authenticateJWT = createAuthMiddleware(false);
 
+// Admin-only JWT authentication middleware 
+const authenticateJWTAdmin = createAuthMiddleware(true);
 
 module.exports = {
     generateToken,
     authenticateJWT,
+    authenticateJWTAdmin
 };
