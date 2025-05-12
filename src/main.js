@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./db');
 const menu = require('./routes/menu');
+const table = require('./routes/table');
 
 const app = express();
 app.use(express.json());
@@ -26,6 +27,7 @@ app.get('/hello_world', (req, res) => {
 });
 
 menu(app);
+table(app);
 
 const port = 3000;
 app.listen(port, () => {
