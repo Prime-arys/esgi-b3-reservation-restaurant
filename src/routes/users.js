@@ -96,7 +96,6 @@ async function disconnectUser(req, res) {
 }
 
 async function getUserInfo(req, res) {
-    console.log("getUserInfo");
     const user = req.user;
     res.status(200).json({
         message: 'User info retrieved successfully',
