@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('./db');
+const menu = require('./routes/menu');
 
 const app = express();
 app.use(express.json());
@@ -23,6 +24,8 @@ app.use(express.json());
 app.get('/hello_world', (req, res) => {
     res.send("Hello World, Réservation de Table");
 });
+
+menu(app);
 
 const port = 3000;
 app.listen(port, () => {
