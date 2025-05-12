@@ -113,7 +113,7 @@ async function getUserInfo(req, res) {
 function initUserRoutes(app) {
     app.post('/api/users/register', registerUser);
     app.post('/api/users/connect', connectUser);
-    app.post('/api/users/disconnect', disconnectUser);
+    app.get('/api/users/disconnect', disconnectUser);
     app.get('/api/users/info', authenticateJWT, getUserInfo);
 }
 
