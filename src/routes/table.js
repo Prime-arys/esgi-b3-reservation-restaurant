@@ -1,4 +1,5 @@
 const db = require("../db");
+const {authenticateJWTAdmin} = require("../utils/jwt");
 
 async function createTable(req, res) {
     try {
@@ -137,10 +138,10 @@ async function allocateTableReservation(group_size) {
 }
 
 function initRoutesTable(app) {
-    app.post("/api/table", createTable);
-    app.get("/api/table", getTable);
-    app.put("/api/table/:id", updateTable);
-    app.get("/api/table/:group_size", allocateTable);
+    app.post("/api/table", authenticateJWTAdmin, createTable);
+    app.get("/api/table", authenticateJWTAdmin, getTable);
+    app.put("/api/table/:id", authenticateJWTAdmin, updateTable);
+    app.get("/api/table/:group_size", authenticateJWTAdmin, allocateTable);
 }
 
 module.exports = {initRoutesTable, allocateTableReservation};

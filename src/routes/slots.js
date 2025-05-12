@@ -1,4 +1,5 @@
 const db = require("../db");
+const {authenticateJWTAdmin} = require("../utils/jwt");
 
 async function getSlots(req, res) {
   try {
@@ -70,11 +71,11 @@ async function getAvailability(req, res) {
 }
 
 function init_routes_slots(app) {
-  app.get("/api/slots", getSlots);
-  app.post("/api/slot", createSlot);
-  app.put("/api/slot/:id_slot", updateSlot);
-  app.delete("/api/slot/:id_slot", deleteSlot);
-  app.get("/api/availability/:date_", getAvailability);
+  app.get("/api/slots", authenticateJWTAdmin, getSlots);
+  app.post("/api/slot", authenticateJWTAdmin, createSlot);
+  app.put("/api/slot/:id_slot", authenticateJWTAdmin, updateSlot);
+  app.delete("/api/slot/:id_slot", authenticateJWTAdmin, deleteSlot);
+  app.get("/api/availability/:date_", authenticateJWTAdmin, getAvailability);
 }
 
 module.exports = init_routes_slots;
