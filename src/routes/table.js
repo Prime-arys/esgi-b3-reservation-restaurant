@@ -1,12 +1,5 @@
 const db = require("../db");
 
-function init_routes_table(app) {
-    init_route_create_table(app);
-    init_route_update_table(app);
-    init_route_get_table(app);
-    init_route_allocate_table(app);
-}
-
 async function createTable(req, res) {
     try {
         const {seats} = req.body;
@@ -41,7 +34,7 @@ async function getTableById(req, res) {
     }
 }
 
-async function geTable(req, res) {
+async function getTable(req, res) {
     try {
         const [rows] = await db.query("SELECT * from tables");
         res.json(rows);
@@ -50,46 +43,61 @@ async function geTable(req, res) {
     }
 }
 
+// Récupérer les tables disponibles depuis la base de données
+async function getAvailableTables() {
+    const [tables] = await db.query(
+        "SELECT * FROM tables WHERE NOT EXISTS(SELECT 1 FROM reservation_tables WHERE reservation_tables.tables_id = tables.tables_id) ORDER BY seats DESC"
+    );
+    return tables;
+}
+
+// Allouer les tables optimales selon la taille du groupe
+function findOptimalTables(tables, groupSize) {
+    const allocatedTables = [];
+    const availableTables = [...tables];
+    let remainingSize = groupSize;
+
+    for (const table of availableTables) {
+        if (remainingSize <= 0) break;
+
+        if (table.seats <= remainingSize) {
+            allocatedTables.push(table);
+            remainingSize -= table.seats;
+
+            const index = tables.findIndex(t => t.tables_id === table.tables_id);
+            if (index !== -1) tables.splice(index, 1);
+        }
+    }
+
+    if (remainingSize > 0 && tables.length > 0) {
+        const smallestTable = tables.reverse().find(table => table.seats >= remainingSize);
+
+        if (smallestTable) {
+            allocatedTables.push(smallestTable);
+            remainingSize -= smallestTable.seats;
+        } else if (tables.length > 0) {
+            allocatedTables.push(tables[0]);
+            remainingSize -= tables[0].seats;
+        }
+    }
+
+    return { allocatedTables, remainingSize };
+}
+
 async function allocateTable(req, res) {
     try {
-        let allocated_tables = [];
-        let {group_size} = req.params;
+        let { group_size } = req.params;
         group_size = parseInt(group_size, 10);
 
-        const [tables] = await db.query(
-            "select * from tables where not exists(SELECT 1 from reservation_tables where reservation_tables.tables_id = tables.tables_id) order by seats DESC"
-        );
+        // Récupérer les tables disponibles
+        const tables = await getAvailableTables();
 
-        const availableTables = [...tables];
-        let remainingSize = group_size;
+        // Trouver les tables optimales
+        const { allocatedTables: allocated_tables, remainingSize } = findOptimalTables(tables, group_size);
 
-        for (const table of availableTables) {
-            if (remainingSize <= 0) break;
-
-            if (table.seats <= remainingSize) {
-                allocated_tables.push(table);
-                remainingSize -= table.seats;
-
-                const index = tables.findIndex(t => t.tables_id === table.tables_id);
-                if (index !== -1) tables.splice(index, 1);
-            }
-        }
-
-
-        if (remainingSize > 0 && tables.length > 0) {
-            const smallestTable = tables.reverse().find(table => table.seats >= remainingSize);
-
-            if (smallestTable) {
-                allocated_tables.push(smallestTable);
-                remainingSize -= smallestTable.seats;
-            } else if (tables.length > 0) {
-                allocated_tables.push(tables[0]);
-                remainingSize -= tables[0].seats;
-            }
-        }
-
+        // Renvoyer la réponse appropriée
         if (remainingSize <= 0) {
-            res.json({allocated_tables});
+            res.json({ allocated_tables });
         } else {
             return res.status(403).json({
                 allocated_tables,
@@ -98,15 +106,47 @@ async function allocateTable(req, res) {
             });
         }
     } catch (err) {
-        res.status(500).json({error: err.message});
+        res.status(500).json({ error: err.message });
+    }
+}
+
+async function allocateTableReservation(group_size) {
+    try {
+        group_size = parseInt(group_size, 10);
+
+        // Récupérer les tables disponibles
+        const tables = await getAvailableTables();
+
+        // Trouver les tables optimales
+        const { allocatedTables: allocated_tables, remainingSize } = findOptimalTables(tables, group_size);
+
+        // Renvoyer le résultat sous forme d'objet
+        if (remainingSize <= 0) {
+            return {
+                success: true,
+                allocated_tables
+            };
+        } else {
+            return {
+                success: false,
+                allocated_tables,
+                error: "Pas assez de place pour le nombre de personnes restantes",
+                remaining_group_size: remainingSize
+            };
+        }
+    } catch (err) {
+        return {
+            success: false,
+            error: err.message
+        };
     }
 }
 
 function initRoutesTable(app) {
     app.post("/api/table", createTable);
-    app.get("/api/table", geTable);
+    app.get("/api/table", getTable);
     app.put("/api/table/:id", getTableById);
     app.get("/api/table/:group_size", allocateTable);
 }
 
-module.exports = initRoutesTable;
+module.exports = {initRoutesTable, allocateTableReservation};
