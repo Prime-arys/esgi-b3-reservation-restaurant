@@ -9,7 +9,7 @@ const authenticateJWTAdmin = require('../utils/jwt').authenticateJWTAdmin;
 async function getReservations(req, res) {
     try {
         const [reservations] = await db.query("SELECT * FROM reservations");
-        res.json(reservations);
+        res.json({"reservations":reservations});
     } catch (error) {
         console.error("Erreur lors de la récupération des réservations:", error.message);
         res.status(500).json({error: "Erreur lors de la récupération des réservations"});
@@ -32,7 +32,7 @@ async function getReservationByUser(req, res) {
             return res.status(404).json({error: "Aucune réservation trouvée"});
         }
 
-        res.json(reservations);
+        res.json({"reservations":reservations});
     } catch (error) {
         console.error("Erreur lors de la récupération de la réservation:", error.message);
         res.status(500).json({error: "Erreur lors de la récupération de la réservation"});
@@ -57,7 +57,6 @@ async function createReservation(req, res) {
                 return res.status(400).json({error: "Impossible d'allouer des tables pour cette réservation"});
             }
         } catch (tableError) {
-            console.log(tableError);
             return res.status(400).json({error: "Impossible d'allouer des tables pour cette réservation"});
         }
 
