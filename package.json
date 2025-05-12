@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "start" : "node src/main.js"
+    "start": "node src/main.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/Prime-arys/esgi-b3-reservation-restaurant/issues"
   },
-  "homepage": "https://github.com/Prime-arys/esgi-b3-reservation-restaurant#readme"
+  "homepage": "https://github.com/Prime-arys/esgi-b3-reservation-restaurant#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1"
+  }
 }
