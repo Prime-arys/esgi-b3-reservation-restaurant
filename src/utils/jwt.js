@@ -2,11 +2,12 @@ const { expressjwt } = require("express-jwt");
 const jwt = require("jsonwebtoken");
 const getUserById = require("../utils/auth").getUserById;
 const ROLES = require("../enums/userRole").ROLES;
+const process = require("process");
 
-const jwtSecret = "jwt_secret";
-const jwtExpiration = "72h";
-const jwtAlgorithm = "HS256";
-const jwtIssuer = "http://localhost:3000";
+const jwtSecret = process.env.JWT_SECRET;
+const jwtExpiration = process.env.JWT_EXPIRATION;
+const jwtAlgorithm = process.env.JWT_ALGORITHM;
+const jwtIssuer = process.env.JWT_ISSUER;
 const jwtOptions = {
     secret: jwtSecret,
     algorithms: [jwtAlgorithm],
