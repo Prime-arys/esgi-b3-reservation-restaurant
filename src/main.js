@@ -4,7 +4,8 @@ const cookieParser = require('cookie-parser');
 
 const initUserRoutes = require('./routes/users').initUserRoutes;
 const menu = require('./routes/menu');
-const table = require('./routes/table');
+const table = require('./routes/table').initRoutesTable;
+const reservations = require("./routes/reservations");
 
 const app = express();
 app.use(express.json());
@@ -34,6 +35,7 @@ app.get('/hello_world', (req, res) => {
 initUserRoutes(app);
 menu(app);
 table(app);
+reservations(app);
 
 const port = 3000;
 app.listen(port, () => {
