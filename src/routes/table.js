@@ -29,7 +29,7 @@ async function updateTable(req, res) {
         if (result.affectedRows === 0) {
             return res.status(404).json({error: "table non trouvée"});
         }
-        res.json({toto: id, tata: seats});
+        res.json({id: id, seats: seats});
     } catch (err) {
         res.status(500).json({error: err.message});
     }
