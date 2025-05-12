@@ -14,7 +14,7 @@
   "author": "",
   "license": "All rights reserved",
   "private": true,
-  "type": "module",
+  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/Prime-arys/esgi-b3-reservation-restaurant/issues"
   },
