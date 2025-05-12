@@ -1,10 +1,14 @@
 const express = require('express');
 const db = require('./db');
+const cookieParser = require('cookie-parser');
+
+const initUserRoutes = require('./routes/users').initUserRoutes;
 const menu = require('./routes/menu');
 const table = require('./routes/table');
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 (async () => {
     try {
@@ -26,6 +30,8 @@ app.get('/hello_world', (req, res) => {
     res.send("Hello World, Réservation de Table");
 });
 
+// Initialize user routes
+initUserRoutes(app);
 menu(app);
 table(app);
 

@@ -4,3 +4,7 @@ const STATUS = {
     CANCELLED: 'CANCELLED',
     COMPLETED: 'COMPLETED'
 };
+
+module.exports = {
+    STATUS
+};
