@@ -1,6 +1,7 @@
 const db = require('../db');
 const { allocateTableReservation } = require('./table');
 const authenticateJWT = require('../utils/jwt').authenticateJWT;
+const authenticateJWTAdmin = require('../utils/jwt').authenticateJWTAdmin;
 
 "use strict";
 
@@ -18,15 +19,17 @@ async function getReservations(req, res) {
 // Récupération d'une réservation par son utilisateur connecté
 async function getReservationByUser(req, res) {
     try {
-        const user_id = 1;
-        if (user_id === null) {
-            return res.status(404).json({error: "Veuillez vous connecter"})
+        // Récupérer l'utilisateur depuis le middleware d'authentification
+        const user = req.user;
+
+        if (!user || !user.user_id) {
+            return res.status(401).json({error: "Veuillez vous connecter"});
         }
 
-        const [reservations] = await db.query("SELECT * FROM reservations WHERE user_id = ?", [user_id]);
+        const [reservations] = await db.query("SELECT * FROM reservations WHERE user_id = ?", [user.user_id]);
 
         if (reservations.length === 0) {
-            return res.status(404).json({error: "Réservations non trouvée"});
+            return res.status(404).json({error: "Aucune réservation trouvée"});
         }
 
         res.json(reservations);
@@ -152,12 +155,12 @@ async function validateReservation(req, res) {
 }
 
 function initReservation(app) {
-    app.get("/reservations", authenticateJWT, getReservations);
-    app.get("/my-reservations", authenticateJWT, getReservationByUser);
-    app.post("/reservations", authenticateJWT, createReservation);
-    app.put("/reservations/:id", authenticateJWT, updateReservation);
-    app.delete("/reservations/:id", authenticateJWT, deleteReservation);
-    app.patch("/reservations/:id/validate", authenticateJWT, validateReservation);
+    app.get("/api/reservations", authenticateJWTAdmin, getReservations);
+    app.get("/api/my-reservations", authenticateJWT, getReservationByUser);
+    app.post("/api/reservations", authenticateJWT, createReservation);
+    app.put("/api/reservations/:id", authenticateJWT, updateReservation);
+    app.delete("/api/reservations/:id", authenticateJWT, deleteReservation);
+    app.patch("/api/reservations/:id/validate", authenticateJWTAdmin, validateReservation);
 }
 
 module.exports = initReservation;
