@@ -60,9 +60,10 @@ ALTER TABLE reservation_tables
    ADD CONSTRAINT fk_reservation_tables_reservations FOREIGN KEY(user_id, reservation_id) REFERENCES reservations(user_id, reservation_id);
 
 -- Add values in menu_items table
-INSERT INTO `menu_items` (`items_id`, `name`, `description`, `price`, `category`) 
-VALUES (NULL, `salade`, `salade avec des olives`, 10.0, `APPETIZER`),
-   (NULL, `steak`, `servi avec des frites`, 50.0, `MAIN`),
-   (NULL, `tiramisu`, `café ou chocolat`, 5.0, `DESSERT`),
-   (NULL, `virgin mojito`, `cocktail sans alcool à la menthe`, 2.0, `BEVERAGE`),
-   (NULL, `plateau partage`, `plateau de brunch avec un ensemble d\`entrée, plat, dessert et boisson`, 100.0, `SPECIAL`);
+INSERT INTO menu_items (items_id, name, description, price, category) 
+VALUES (NULL, 'salade', 'salade avec des olives', 10.0, 'APPETIZER'),
+   (NULL, 'steak', 'servi avec des frites', 50.0, 'MAIN'),
+   (NULL, 'tiramisu', 'café ou chocolat', 5.0, 'DESSERT'),
+   (NULL, 'virgin mojito', 'cocktail sans alcool à la menthe', 2.0, 'BEVERAGE'),
+   (NULL, 'plateau partage', 'plateau de brunch avec un ensemble d entrée, plat, dessert et boisson', 100.0, 'SPECIAL');
+   
