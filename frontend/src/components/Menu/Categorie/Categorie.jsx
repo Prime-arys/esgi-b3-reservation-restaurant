@@ -20,7 +20,6 @@ Categorie.propTypes = {
         id: PropTypes.number.isRequired,
         nom: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
         prix: PropTypes.number.isRequired,
     })).isRequired,
 };

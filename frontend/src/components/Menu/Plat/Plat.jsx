@@ -1,22 +1,20 @@
 import PropTypes from 'prop-types';
 import "./Plat.css"
 
-const Plat = ({ nom, description, image, prix, ...otherProps }) => {
+const Plat = ({ name, description, price, ...otherProps }) => {
     return (
         <div className="plat">
-            <h2>{nom}</h2>
-            <img src={image} alt={nom} sizes='(max-width: 600px) 100vw, 600px' />
+            <h2>{name}</h2>
             <p>{description}</p>
-            <p>Prix: {prix} €</p>
+            <p>Prix: {price} €</p>
         </div>
     );
 };
 
 Plat.propTypes = {
-  nom: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  prix: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
 };
 
 export default Plat;
