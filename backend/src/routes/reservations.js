@@ -43,9 +43,9 @@ async function getReservationByUser(req, res) {
 // Création d'une réservation
 async function createReservation(req, res) {
     try {
-        const {name, phone, number_of_people, date, time, note} = req.body;
+        const {number_of_people, date, time} = req.body;
 
-        if (!name || !phone || !number_of_people || !date || !time || !note) {
+        if (!number_of_people || !date || !time) {
             return res.status(400).json({error: "Tous les champs sont requis"});
         }
 
@@ -70,8 +70,8 @@ async function createReservation(req, res) {
 
 
         const result = await db.query(
-            "INSERT INTO reservations (user_id, number_of_people, date_, time_, status) VALUES (1, ?, ?, ?, 'PENDING')",
-            [number_of_people, date, time]
+            "INSERT INTO reservations (user_id, number_of_people, date_, time_, status) VALUES (?, ?, ?, ?, 'PENDING')",
+            [req.user, number_of_people, date, time]
         );
 
         res.status(201).json({message: "Réservation créée avec succès", reservationId: result.insertId});
@@ -93,9 +93,9 @@ async function updateReservation(req, res) {
             return res.status(404).json({error: "Réservation non trouvée ou déjà confirmée"});
         }
 
-        const {name, phone, number_of_people, date, time, note} = req.body;
+        const {number_of_people, date, time} = req.body;
 
-        if (!name || !phone || !number_of_people || !date || !time || !note) {
+        if (!number_of_people || !date || !time || !
             return res.status(400).json({error: "Tous les champs sont requis"});
         }
 
