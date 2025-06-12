@@ -13,6 +13,7 @@ const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Menu = lazy(() => import("./pages/Menu"));
 const MyReservation = lazy(() => import("./pages/MyReservation"));
+const Reservations = lazy(() => import("./pages/Reservations"));
 
 const queryClient = new QueryClient()
 
@@ -65,6 +66,16 @@ function AppInner() {
           />
 
         </Route>
+          <Route
+              path="reservations"
+              element={
+                  Context.isLogged ? (
+                      <Reservations />
+                  ) : (
+                      <Navigate to="/login" replace />
+                  )
+              }
+          />
       </Routes>
     </BrowserRouter>
   );
