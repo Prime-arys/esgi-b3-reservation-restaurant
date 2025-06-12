@@ -6,6 +6,7 @@ const CustomButton = ({ buttonText = "Click Me", onClick, disabled = false, ...o
       className="custom-button" 
       onClick={onClick} 
       disabled={disabled}
+      {...otherProps}
     >
       {buttonText}
     </button>
