@@ -47,3 +47,19 @@ export async function deleteReservation(id) {
             return false;
     }
 }
+
+export async function createReservation(reservation) {
+    const fw = new FetchWraper();
+    fw.method = "POST";
+    fw.url = API + "/reservations";
+    fw.body = JSON.stringify(reservation);
+
+    const res = await fw.fetchw();
+
+    switch (res.status) {
+        case 201:
+            return true;
+        default:
+            return false;
+    }
+}
