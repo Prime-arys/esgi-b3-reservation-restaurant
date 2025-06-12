@@ -1,6 +1,7 @@
-import Categorie from "./Categorie/Categorie";
+import Categorie from "../components/Menu/Categorie/Categorie";
 import "./Menu.css";
 
+// eslint-disable-next-line no-unused-vars
 const Menu = (...otherProps) => {
   return (
     <div className="menu">

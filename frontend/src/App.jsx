@@ -11,7 +11,7 @@ import { lazy } from "react";
 
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
-const Hello = lazy(() => import("./pages/MyReservations"));
+const Menu = lazy(() => import("./pages/Menu"));
 
 const queryClient = new QueryClient()
 
@@ -51,15 +51,12 @@ function AppInner() {
             }
           />
           <Route
-            path="hello"
+            path="menu"
             element={
-              Context.isLogged ? (
-                <Hello />
-              ) : (
-                <Navigate to="/login" replace />
-              )
+              <Menu />
             }
           />
+
         </Route>
       </Routes>
     </BrowserRouter>

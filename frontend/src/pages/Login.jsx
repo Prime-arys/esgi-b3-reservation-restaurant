@@ -36,8 +36,9 @@ function Login() {
 
     return (
         <div className="login-container">
-            <h2>Login</h2>
-            <p>Don't have an account? <Link to="/register">Register here</Link></p>
+            <h2>Connexion</h2>
+            <p>Pas encore de compte ? <Link to="/register">Inscrivez-vous ici</Link></p>
+            <p>Accèder au menu ? <Link to="/menu">Menu</Link></p>
             <br />
             <form onSubmit={(e) => {
                 e.preventDefault();
@@ -47,14 +48,14 @@ function Login() {
             }}>
                 <div className="form-group">
                     <label htmlFor="email">Email:</label>
-                    <InputField inputType="email" placeholder="Enter your email" id="email" name="email" required />
+                    <InputField inputType="email" placeholder="Entrez votre email" id="email" name="email" required />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password:</label>
-                    <InputField inputType="password" placeholder="Enter your password" id="password" name="password" required />
+                    <label htmlFor="password">Mot de passe:</label>
+                    <InputField inputType="password" placeholder="Entrez votre mot de passe" id="password" name="password" required />
                 </div>
                 <div className="form-group">
-                    <CustomButton buttonText="Login" type="submit" />
+                    <CustomButton buttonText="Connexion" type="submit" />
                 </div>
             </form>
         </div>

@@ -27,8 +27,8 @@ function Register() {
 
     return (
         <div className="register-container">
-            <h2>Register</h2>
-            <p>Already have an account? <Link to="/login">Login here</Link></p>
+            <h2>S'inscrire</h2>
+            <p>Déjà un compte ? <Link to="/login">Connectez-vous ici</Link></p>
             <br />
             <form onSubmit={(e) => {
                 e.preventDefault();
@@ -41,26 +41,26 @@ function Register() {
             }}>
                 <div className="form-group">
                     <label htmlFor="email">Email:</label>
-                    <InputField inputType="email" placeholder="Enter your email" id="email" name="email" required />
+                    <InputField inputType="email" placeholder="Entrez votre email" id="email" name="email" required />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password:</label>
-                    <InputField inputType="password" placeholder="Enter your password" id="password" name="password" required />
+                    <label htmlFor="password">Mot de passe:</label>
+                    <InputField inputType="password" placeholder="Entrez votre mot de passe" id="password" name="password" required />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="firstName">First Name:</label>
-                    <InputField inputType="text" placeholder="Enter your first name" id="fname" name="fname" required />
+                    <label htmlFor="firstName">Prénom:</label>
+                    <InputField inputType="text" placeholder="Entrez votre prénom" id="fname" name="fname" required />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="lastName">Last Name:</label>
-                    <InputField inputType="text" placeholder="Enter your last name" id="lname" name="lname" required />
+                    <label htmlFor="lastName">Nom:</label>
+                    <InputField inputType="text" placeholder="Entrez votre nom" id="lname" name="lname" required />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="phone">Phone:</label>
-                    <InputField inputType="tel" placeholder="Enter your phone number" id="phone" name="phone" required />
+                    <label htmlFor="phone">Tel:</label>
+                    <InputField inputType="tel" placeholder="Entrez votre numéro de téléphone" id="phone" name="phone" required />
                 </div>
                 <div className="form-group">
-                    <CustomButton buttonText="Register" type="submit" />
+                    <CustomButton buttonText="S'inscrire" type="submit" />
                 </div>
             </form>
         </div>
