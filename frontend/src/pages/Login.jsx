@@ -1,6 +1,6 @@
 import { Connect, ResConnect } from "../models/Connect";
 import { connect } from "../api/Connect";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import InputField from "../components/common/InputField/InputField";
 import CustomButton from "../components/common/Button/CustomButton";
 
@@ -37,6 +37,8 @@ function Login() {
     return (
         <div className="login-container">
             <h2>Login</h2>
+            <p>Don't have an account? <Link to="/register">Register here</Link></p>
+            <br />
             <form onSubmit={(e) => {
                 e.preventDefault();
                 const email = e.target.email.value;
