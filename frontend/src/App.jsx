@@ -10,7 +10,8 @@ import "./App.css";
 import { lazy } from "react";
 
 const Login = lazy(() => import("./pages/Login"));
-const Hello = lazy(() => import("./pages/Hello"));
+const Register = lazy(() => import("./pages/Register"));
+const Hello = lazy(() => import("./pages/MyReservations"));
 
 const queryClient = new QueryClient()
 
@@ -41,6 +42,12 @@ function AppInner() {
             path="login"
             element={
               <Login />
+            }
+          />
+          <Route
+            path="register"
+            element={
+              <Register />
             }
           />
           <Route
