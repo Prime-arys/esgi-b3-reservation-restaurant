@@ -1,6 +1,61 @@
-function Login () {
+import { Connect, ResConnect } from "../models/Connect";
+import { connect } from "../api/Connect";
+import { useNavigate } from "react-router";
+import InputField from "../components/common/InputField/InputField";
+import CustomButton from "../components/common/Button/CustomButton";
+
+function Login() {
+    const navigate = useNavigate();
+
+    const handleLogin = async (email, password) => {
+        const connectData = Connect.fromJS({ email, password });
+        try {
+            const result = await connect(connectData);
+            if (result) {
+                // Handle successful login (e.g., redirect to dashboard)
+                console.log("Login successful");
+                switch (result.role) {
+                    case "ADMIN":
+                        navigate("/reservations");
+                        break;
+                    case "CLIENT":
+                        navigate("/my-reservations");
+                        break;
+                    default:
+                        navigate("/");
+                }
+
+            } else {
+                // Handle login failure (e.g., show error message)
+                console.error("Login failed");
+            }
+        } catch (error) {
+            console.error("Error during login:", error);
+        }
+    }
+
     return (
-        <h1>Login</h1>
+        <div className="login-container">
+            <h2>Login</h2>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                const email = e.target.email.value;
+                const password = e.target.password.value;
+                handleLogin(email, password);
+            }}>
+                <div className="form-group">
+                    <label htmlFor="email">Email:</label>
+                    <InputField inputType="email" placeholder="Enter your email" id="email" name="email" required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password:</label>
+                    <InputField inputType="password" placeholder="Enter your password" id="password" name="password" required />
+                </div>
+                <div className="form-group">
+                    <CustomButton buttonText="Login" type="submit" />
+                </div>
+            </form>
+        </div>
     );
 }
 

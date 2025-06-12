@@ -27,7 +27,6 @@ function App() {
 
 function AppInner() {
   const Context = useContext(AuthContext);
-  console.log("Context", Context);
 
   return (
     <BrowserRouter>
@@ -35,7 +34,8 @@ function AppInner() {
         <Route path="/">
           <Route
             index
-            element={<Navigate to={!Context.isLogged ? "/login" : "/hello"} replace />}
+            element={<Navigate to={!Context.isLogged ? "/login" :
+              Context.user.role === "ADMIN" ? "/reservations" : "/my-reservations"} replace />}
           />
           <Route
             path="login"
