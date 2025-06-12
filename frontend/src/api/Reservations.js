@@ -1,7 +1,7 @@
 import { FetchWraper } from "../utils/FetchWraper.js";
 import { API } from "../utils/Vars.js";
 import { Reservations } from "../models/Reservations.js";
-import { UserInfo } from "../models/UserInfo.js";
+
 
 export async function getReservations() {
     const fw = new FetchWraper();
