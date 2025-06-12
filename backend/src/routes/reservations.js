@@ -71,7 +71,7 @@ async function createReservation(req, res) {
 
         const result = await db.query(
             "INSERT INTO reservations (user_id, number_of_people, date_, time_, status) VALUES (?, ?, ?, ?, 'PENDING')",
-            [req.user, number_of_people, date, time]
+            [req.user.user_id, number_of_people, date, time]
         );
 
         res.status(201).json({message: "Réservation créée avec succès", reservationId: result.insertId});
@@ -95,7 +95,7 @@ async function updateReservation(req, res) {
 
         const {number_of_people, date, time} = req.body;
 
-        if (!number_of_people || !date || !time || !
+        if (!number_of_people || !date || !time) {
             return res.status(400).json({error: "Tous les champs sont requis"});
         }
 
