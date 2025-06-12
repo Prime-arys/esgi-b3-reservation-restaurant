@@ -4,7 +4,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { useContext } from "react";
-import { AuthContext } from "./utils/Auth";
+import { AuthContext } from "./utils/AuthContext";
 import Wrapper from "./components/App/Wrapper";
 import "./App.css";
 import { lazy } from "react";
