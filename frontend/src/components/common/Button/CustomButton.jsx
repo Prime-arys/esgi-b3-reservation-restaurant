@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const CustomButton = ({ buttonText = "Click Me", onClick, disabled = false }) => {
+const CustomButton = ({ buttonText = "Click Me", onClick, disabled = false, ...otherProps }) => {
   return (
     <button 
       className="custom-button" 
