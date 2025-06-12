@@ -1,5 +1,5 @@
 const db = require('../db');
-const { allocateTableReservation } = require('./table');
+const {allocateTableReservation} = require('./table');
 const authenticateJWT = require('../utils/jwt').authenticateJWT;
 const authenticateJWTAdmin = require('../utils/jwt').authenticateJWTAdmin;
 
@@ -8,8 +8,9 @@ const authenticateJWTAdmin = require('../utils/jwt').authenticateJWTAdmin;
 // Récupération de toutes les réservations (admin uniquement)
 async function getReservations(req, res) {
     try {
-        const [reservations] = await db.query("SELECT * FROM reservations");
-        res.json({"reservations":reservations});
+        // Récupère les réservations avec les détails de l'utilisateur
+        const [reservations] = await db.query("SELECT r.reservation_id, r.user_id, r.number_of_people, r.date_, r.time_, r.status, u.fname, u.lname, u.email, u.phone FROM reservations r LEFT JOIN users u ON r.user_id = u.user_id");
+        res.json({"reservations": reservations});
     } catch (error) {
         console.error("Erreur lors de la récupération des réservations:", error.message);
         res.status(500).json({error: "Erreur lors de la récupération des réservations"});
@@ -32,7 +33,7 @@ async function getReservationByUser(req, res) {
             return res.status(404).json({error: "Aucune réservation trouvée"});
         }
 
-        res.json({"reservations":reservations});
+        res.json({"reservations": reservations});
     } catch (error) {
         console.error("Erreur lors de la récupération de la réservation:", error.message);
         res.status(500).json({error: "Erreur lors de la récupération de la réservation"});
