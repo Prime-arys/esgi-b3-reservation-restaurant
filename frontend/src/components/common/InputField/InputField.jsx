@@ -1,16 +1,20 @@
 import PropTypes from 'prop-types';
 
-const InputField = ({ inputType="text", placeholder="Enter text here..."}) => {
+const InputField = ({ inputType = "text", placeholder = "Enter text here...", ...otherProps }) => {
   return (
     <div className="input-field">
-      <input type={inputType} placeholder={placeholder} />
+      <input
+        type={inputType}
+        placeholder={placeholder}
+        {...otherProps}
+      />
     </div>
   );
 };
 
 InputField.propTypes = {
-    placeholder: PropTypes.string,
-    inputType: PropTypes.string,
+  placeholder: PropTypes.string,
+  inputType: PropTypes.string,
 }
 
 export default InputField;
