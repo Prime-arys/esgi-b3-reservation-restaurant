@@ -8,6 +8,7 @@ import { AuthContext } from "./utils/AuthContext";
 import Wrapper from "./components/App/Wrapper";
 import "./App.css";
 import { lazy } from "react";
+import NewRegistration from "./pages/NewRegistration";
 
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
@@ -62,6 +63,12 @@ function AppInner() {
             path="my-reservations"
             element={
               Context.isLogged ? <MyReservation /> : <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="reservations"
+            element={
+              Context.isLogged ? <NewRegistration /> : <Navigate to="/login" replace />
             }
           />
 
